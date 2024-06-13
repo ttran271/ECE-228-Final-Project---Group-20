@@ -1,1 +1,1 @@
-# ECE_228_Final_Project_Group-20
+# ECE 228 Final Project - Group 20: Brain Tumor Segmentation using 2D Residual UNet
