@@ -16,3 +16,20 @@ Python packages required to run the notebook: **nibabel**, **opencv (cv2)**, **t
 ![PR_Block](img/PR_Block.svg)
 
 ## Example of our model's prediction
+### Good predictions
+![p1](img/output1.png)
+
+![p2](img/output2.png)
+
+![p3](img/output3.png)
+
+![p4](img/output4.png)
+
+![p5](img/output5.png)
+
+### Bad predictions
+![b1](img/bad1.png)
+
+![b2](img/bad2.png)
+
+![b3](img/bad3.png)
