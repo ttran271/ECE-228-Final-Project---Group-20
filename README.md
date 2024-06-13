@@ -15,6 +15,9 @@ Python packages required to run the notebook: **nibabel**, **opencv (cv2)**, **t
 ## Pre-activation ResNet Block
 ![PR_Block](img/PR_Block.svg)
 
+## Training Loop
+![Loop](img/TrainingLoop.svg)
+
 ## Example of our model's prediction
 ### Good predictions
 ![p1](img/output1.png)
