@@ -267,10 +267,6 @@ class PR_UNET(nn.Module):
         self.upconv3 = nn.ConvTranspose2d(in_channels=self.start_c*4, out_channels=self.start_c*2, kernel_size=(2,2), stride=2)
         self.upconv4 = nn.ConvTranspose2d(in_channels=self.start_c*2, out_channels=self.start_c, kernel_size=(2,2), stride=2)
 
-        self.downconv1 = nn.Conv2d(in_channels=self.start_c, out_channels=self.start_c, kernel_size=(2,2), stride=2)
-        self.downconv2 = nn.Conv2d(in_channels=self.start_c*2, out_channels=self.start_c*2, kernel_size=(2,2), stride=2)
-        self.downconv3 = nn.Conv2d(in_channels=self.start_c*4, out_channels=self.start_c*4, kernel_size=(2,2), stride=2)
-        self.downconv4 = nn.Conv2d(in_channels=self.start_c*8, out_channels=self.start_c*8, kernel_size=(2,2), stride=2)
         self.mp = nn.MaxPool2d((2,2))
 
         self.out = nn.Conv2d(in_channels=self.start_c, out_channels=4, kernel_size=(1,1))
@@ -286,16 +282,12 @@ class PR_UNET(nn.Module):
 
         # Encoding path
         x1 = self.E1(x)
-        # x1_down = self.downconv1(x1)
         x1_down = self.mp(x1)
         x2 = self.E2(x1_down)
-        # x2_down = self.downconv2(x2)
         x2_down = self.mp(x2)
         x3 = self.E3(x2_down)
-        # x3_down = self.downconv3(x3)
         x3_down = self.mp(x3)
         x4 = self.E4(x3_down)
-        # x4_down = self.downconv4(x4)
         x4_down = self.mp(x4)
         x5 = self.E5(x4_down)
         
@@ -406,7 +398,7 @@ class PR_UNET(nn.Module):
 ########## END ##########
 
 ########## START ##########
-########## ResUNet ##########
+########## ResUNet (BatchNorm) ##########
 class ResBlock(nn.Module):
     def __init__(self, in_channel, out_channel, stride=1):
         super(ResBlock, self).__init__()
@@ -504,7 +496,7 @@ class ResUNET(nn.Module):
     
 #################### TESTING ####################
 ########## START ##########
-########## ResUNET but InstanceNorm2d ##########
+########## ResUNET (InstanceNorm) ##########
 class ResBlock2(nn.Module):
     def __init__(self, in_channel, out_channel, stride=1):
         super(ResBlock2, self).__init__()

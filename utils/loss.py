@@ -2,7 +2,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-### Implementation for Dice Loss
+#################### READY ####################
+########## START ##########
+########## Dice Loss ##########
 class DiceLoss(nn.Module):
     def __init__(self, mode='batch'):
         super(DiceLoss, self).__init__()
@@ -46,12 +48,13 @@ class DiceLoss(nn.Module):
                     samples_loss += (1-score)
                 total_loss += (samples_loss / num_slice)
 
-        # diceLoss = total_loss / 4
         diceLoss = total_loss
         
         return diceLoss
+########## END ##########
 
-### Implementation for Focal Loss
+########## START ##########
+########## Focal Loss ##########
 class FocalLoss(nn.Module):
     def __init__(self, alpha=[0.25, 0.8, 0.8, 0.8], gamma=2.0, reduction='mean'):
         super(FocalLoss, self).__init__()
@@ -82,8 +85,10 @@ class FocalLoss(nn.Module):
             focal_loss = focal_loss.sum()
         
         return focal_loss
+########## END ##########
 
-### Implementation for Focal + Dice Loss
+########## START ##########
+########## Focal + Dice ##########
 class FocalDice(nn.Module):
     def __init__(self, alpha=[0.25, 0.8, 0.8, 0.8], gamma=2.0, reduction='mean', s1=1, s2=1):
         super(FocalDice, self).__init__()
@@ -99,9 +104,11 @@ class FocalDice(nn.Module):
     def forward(self, pred, target):
         loss = self.s1*self.focal(pred, target) + self.s2*self.dice(pred, target)
         return loss
+########## END ##########
         
-########## TESTING ##########
-### Old Focal Loss with [alpha, 1-alpha] as weights
+#################### TESTING ####################
+########## START ##########
+########## Old Focal Loss with [alpha, 1-alpha] as weights ##########
 class FocalLossTest(nn.Module):
     def __init__(self, alpha=0.25, gamma=2.0, reduction='mean'):
         super(FocalLossTest, self).__init__()
@@ -131,8 +138,10 @@ class FocalLossTest(nn.Module):
             focal_loss = focal_loss.sum()
         
         return focal_loss
+########## END ##########
 
-### FocalLoss ver 2
+########## START ##########
+########## FocalLoss ver 2 ##########
 class FocalLoss2(nn.Module):
     def __init__(self, alpha=[0.25, 0.8, 0.8, 0.8], gamma=2.0, reduction='mean'):
         super(FocalLoss2, self).__init__()
@@ -165,8 +174,10 @@ class FocalLoss2(nn.Module):
             focal_loss = focal_loss.sum()
         
         return focal_loss
+########## END ##########
 
-### Dice Loss but all at once
+########## START ##########
+########## Dice Loss but all at once ##########
 class DiceLossTest(nn.Module):
     def __init__(self, mode='batch'):
         super(DiceLossTest, self).__init__()
@@ -188,8 +199,10 @@ class DiceLossTest(nn.Module):
         diceLoss = (1-score)
         
         return diceLoss
-    
-### FocalDice but Dice Loss is all at once
+########## END ##########
+
+########## START ##########
+########## FocalDice but Dice Loss is all at once ##########
 class FocalDiceTest(nn.Module):
     def __init__(self, alpha=[0.25, 0.8, 0.8, 0.8], gamma=2.0, reduction='mean'):
         super(FocalDiceTest, self).__init__()
@@ -203,8 +216,10 @@ class FocalDiceTest(nn.Module):
     def forward(self, pred, target):
         loss = self.focal(pred, target) + self.dice(pred, target)
         return loss
+########## END ##########
 
-### FocalDice2
+########## START ##########
+########## FocalDice2 ##########
 class FocalDice2(nn.Module):
     def __init__(self, alpha=[0.25, 0.8, 0.8, 0.8], gamma=2.0, reduction='mean', s1=1, s2=1):
         super(FocalDice2, self).__init__()
@@ -220,18 +235,21 @@ class FocalDice2(nn.Module):
     def forward(self, pred, target):
         loss = self.s1*self.focal(pred, target) + self.s2*self.dice(pred, target)
         return loss
+########## END ##########
 
-### FD
-class FD(nn.Module):
-    def __init__(self, alpha=0.25, gamma=2.0, reduction='mean'):
-        super(FD, self).__init__()
-        self.alpha = alpha
-        self.gamma = gamma
-        self.reduction = reduction
+########## START ##########
+########## FD ########## (UNUSED)
+# class FD(nn.Module):
+#     def __init__(self, alpha=0.25, gamma=2.0, reduction='mean'):
+#         super(FD, self).__init__()
+#         self.alpha = alpha
+#         self.gamma = gamma
+#         self.reduction = reduction
 
-        self.focal = FocalLossTest(self.alpha, self.gamma, self.reduction)
-        self.dice = DiceLoss()
+#         self.focal = FocalLossTest(self.alpha, self.gamma, self.reduction)
+#         self.dice = DiceLoss()
 
-    def forward(self, pred, target):
-        loss = self.focal(pred, target) + self.dice(pred, target)
-        return loss
+#     def forward(self, pred, target):
+#         loss = self.focal(pred, target) + self.dice(pred, target)
+#         return loss
+########## END ##########
